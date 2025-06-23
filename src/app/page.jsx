@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { FaCode, FaUserFriends, FaTrophy, FaChartLine, FaLock } from 'react-icons/fa';
+import { FaCode, FaUserFriends, FaTrophy, FaChartLine, FaLock, FaGithub } from 'react-icons/fa';
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
       <h1 className="text-center text-5xl md:text-6xl font-extrabold text-indigo-700 dark:text-indigo-200 tracking-tight drop-shadow-lg mb-4">
         DSA Tracker
       </h1>
-      <p className="text-center text-xl md:text-s text-gray-700 dark:text-gray-200 font-medium mb-10 max-w-2xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+      <p className="text-center text-xl md:text-s text-gray-700 dark:text-gray-200 font-medium max-w-2xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         <span className="inline-flex items-center gap-2">
           <FaLock className="inline text-indigo-400" /> Secure
         </span>
@@ -39,7 +39,7 @@ export default function Home() {
 
 
       {/* Call To Action */}
-      <div className="flex justify-center mb-16">
+      <div className="flex justify-center mt-20 mb-20">
         <Link
           href="/login"
           className="inline-block bg-gradient-to-r from-indigo-700 via-indigo-500 to-blue-400
@@ -55,7 +55,92 @@ export default function Home() {
         </Link>
       </div>
 
+
+
+
+
+    
+
+
+
+
+
+    <section className="max-w-5xl mb-16 px-4">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-10 justify-center">
+        {/* Credits Block */}
+        <div className="flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center">
+          <span className="text-2xl text-indigo-700 dark:text-indigo-300 font-extrabold mb-4 tracking-wide flex items-center gap-2">
+            <FaUserFriends className="text-indigo-400" /> Credits
+          </span>
+          <div className="flex flex-col gap-3 items-center text-indigo-700 dark:text-indigo-300 font-bold text-lg">
+            <a
+              href="https://stack-kgec.pages.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center gap-2"
+            >
+              STACK KGEC
+            </a>
+            <a
+              href="https://www.linkedin.com/in/agniva-hait-49508630a/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center gap-2"
+            >
+              Agniva Hait
+            </a>
+            <a
+              href="https://linkedin.com/in/dwaidatta"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center gap-2"
+            >
+              Dwaipayan Datta
+            </a>
+          </div>
+        </div>
+        {/* Contribute Block */}
+        <div className="flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center">
+          <span className="text-2xl text-indigo-700 dark:text-indigo-300 font-extrabold mb-4 tracking-wide flex items-center gap-2">
+            <FaCode className="text-indigo-400" /> Contribute
+          </span>
+          <Link
+            href="https://github.com/STACK-KGEC/stack-dsa-tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-700 dark:text-indigo-300 font-bold text-lg transition m-auto"
+          >
+            <FaGithub className="text-2xl" />
+            Open Source on GitHub
+          </Link>
+          <span className="text-xs mt-3 text-gray-600 dark:text-gray-400 text-center mt-auto">
+            Issues, suggestions, & pull requests are welcome!
+          </span>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {/* Features Section */}
+      <h2 className="text-4xl font-extrabold text-indigo-700 dark:text-indigo-200 text-center mb-16 mt-16">Features</h2>
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 px-4">
         <FeatureCard
           icon={<FaTrophy className="text-4xl text-yellow-400 mb-3" />}
@@ -78,42 +163,6 @@ export default function Home() {
           description="Your data is protected. Only you and your friends can see your progress. No spam, no distractions."
         />
       </section>
-
-      {/* Divider */}
-      <div className="w-full border-t border-indigo-200 dark:border-indigo-800 my-8"></div>
-
-      {/* Credits */}
-      <footer className="flex flex-col items-center mb-8 gap-2">
-        <span className="text-2xl text-gray-700 dark:text-gray-300 font-extrabold mb-2 tracking-wide">Credits</span>
-        <div className="flex flex-wrap items-center gap-4 text-indigo-700 dark:text-indigo-300 font-bold text-lg">
-          <a
-            href="https://stack-kgec.pages.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            STACK KGEC ✨
-          </a>
-          <span className="text-2xl text-gray-400 dark:text-gray-600">•</span>
-          <a
-            href="https://www.linkedin.com/in/agniva-hait-49508630a/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            Agniva Hait ❤️
-          </a>
-          <span className="text-2xl text-gray-400 dark:text-gray-600">•</span>
-          <a
-            href="https://linkedin.com/in/dwaidatta"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
-            Dwaipayan Datta ☕
-          </a>
-        </div>
-      </footer>
 
 
     </div>
