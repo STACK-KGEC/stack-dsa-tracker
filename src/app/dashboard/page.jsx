@@ -14,29 +14,29 @@ export default function Dashboard() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    // Problems solved count
-    const { count } = await supabase
+    // Fetch all problems for the user, including num_of_prbs
+    const { data: problems } = await supabase
       .from('problems')
-      .select('*', { count: 'exact', head: true })
+      .select('difficulty, num_of_prbs')
       .eq('user_id', user.id);
 
-    // Count easy, medium, hard
-    const { data: difficulties } = await supabase
-      .from('problems')
-      .select('difficulty')
-      .eq('user_id', user.id);
-
-    let easy = 0, medium = 0, hard = 0;
-    if (difficulties) {
-      difficulties.forEach(p => {
-        if (p.difficulty === 'Easy') easy++;
-        else if (p.difficulty === 'Medium') medium++;
-        else if (p.difficulty === 'Hard') hard++;
+    let easy = 0, medium = 0, hard = 0, solved = 0, coins = 0;
+    if (problems) {
+      problems.forEach(p => {
+        const n = p.num_of_prbs || 1;
+        solved += n;
+        if (p.difficulty === 'Easy') {
+          easy += n;
+          coins += 10 * n;
+        } else if (p.difficulty === 'Medium') {
+          medium += n;
+          coins += 20 * n;
+        } else if (p.difficulty === 'Hard') {
+          hard += n;
+          coins += 30 * n;
+        }
       });
     }
-
-    // Coins calculation
-    const coins = easy * 10 + medium * 20 + hard * 30;
 
     // Fetch leaderboard alltime to calculate rank and all ranks
     const { data: leaderboard } = await supabase
@@ -63,7 +63,7 @@ export default function Dashboard() {
       rank = userRank ? `#${userRank}` : '-';
     }
 
-    setStats({ solved: count || 0, rank, coins, easy, medium, hard });
+    setStats({ solved, rank, coins, easy, medium, hard });
     setAllRanks(ranks);
   }
 

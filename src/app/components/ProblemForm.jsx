@@ -9,7 +9,6 @@ function getLast7Days() {
   for (let i = 0; i < 7; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() - i);
-    // Always use local time for YYYY-MM-DD
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
@@ -18,19 +17,15 @@ function getLast7Days() {
   return days;
 }
 
-
-function formatDate(date) {
-  const d = new Date(date);
-  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-}
 export default function ProblemForm({ onAdded }) {
+  const [bulk, setBulk] = useState(false);
   const [title, setTitle] = useState('');
   const [difficulty, setDifficulty] = useState('Easy');
   const [link, setLink] = useState('');
+  const [numOfPrbs, setNumOfPrbs] = useState(1);
   const [solvedDate, setSolvedDate] = useState(getLast7Days()[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Calendar logic: only allow selecting today or up to 6 days before
   const minDate = getLast7Days()[6];
   const maxDate = getLast7Days()[0];
 
@@ -43,10 +38,11 @@ export default function ProblemForm({ onAdded }) {
       .from('problems')
       .insert([{
         user_id: user.id,
-        title,
+        title: bulk ? 'Bulk Addition' : title,
         difficulty,
         problem_url: link,
-        solved_date: solvedDate
+        solved_date: solvedDate,
+        num_of_prbs: bulk ? numOfPrbs : 1,
       }]);
 
     if (error) {
@@ -56,6 +52,7 @@ export default function ProblemForm({ onAdded }) {
       setLink('');
       setDifficulty('Easy');
       setSolvedDate(getLast7Days()[0]);
+      setNumOfPrbs(1);
       alert('Problem added successfully!');
       if (onAdded) onAdded();
     }
@@ -64,20 +61,33 @@ export default function ProblemForm({ onAdded }) {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 flex flex-col gap-4">
+      <div className="flex items-center gap-2 mb-2">
+        <input
+          type="checkbox"
+          id="bulk"
+          checked={bulk}
+          onChange={() => setBulk(!bulk)}
+          className="w-5 h-5"
+        />
+        <label htmlFor="bulk" className="font-semibold text-lg text-gray-700 dark:text-gray-200">
+          Bulk Add
+        </label>
+      </div>
       <input
         id="title"
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={bulk ? 'Bulk Addition' : title}
+        onChange={e => setTitle(e.target.value)}
         placeholder="Problem Title"
         className="px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
         required
+        disabled={bulk}
       />
       <div className="flex gap-4">
         <select
           id="difficulty"
           value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
+          onChange={e => setDifficulty(e.target.value)}
           className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg appearance-none"
         >
           <option value="Easy">Easy</option>
@@ -94,11 +104,23 @@ export default function ProblemForm({ onAdded }) {
           className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
         />
       </div>
+      {bulk && (
+        <input
+          id="num_of_prbs"
+          type="number"
+          min={1}
+          max={100}
+          value={numOfPrbs}
+          onChange={e => setNumOfPrbs(Number(e.target.value))}
+          className="px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
+          required
+        />
+      )}
       <input
         id="link"
         type="url"
         value={link}
-        onChange={(e) => setLink(e.target.value)}
+        onChange={e => setLink(e.target.value)}
         placeholder="Problem Link (optional)"
         className="px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
       />

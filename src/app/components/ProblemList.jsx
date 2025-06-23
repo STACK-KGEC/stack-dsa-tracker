@@ -58,8 +58,7 @@ export default function ProblemList() {
           <tr>
             <th className="px-4 py-2 text-left text-indigo-700 dark:text-indigo-300 text-lg">Title</th>
             <th className="px-4 py-2 text-left text-indigo-700 dark:text-indigo-300 text-lg">Difficulty</th>
-            <th className="px-4 py-2 text-left text-indigo-700 dark:text-indigo-300 text-lg">Date</th>
-            <th className="px-4 py-2 text-left text-indigo-700 dark:text-indigo-300 text-lg">Link</th>
+            <th className="px-4 py-2 text-left text-indigo-700 dark:text-indigo-300 text-lg">#</th>
           </tr>
         </thead>
         <tbody>
@@ -79,27 +78,14 @@ export default function ProblemList() {
                   {problem.difficulty}
                 </span>
               </td>
-              <td className="px-4 py-2 text-gray-600 dark:text-gray-300">
-                {formatDateDDMMYYYY(problem.solved_date)}
-              </td>
-              <td className="px-4 py-2">
-                {problem.problem_url ? (
-                  <a
-                    href={problem.problem_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 dark:text-indigo-400 underline font-semibold"
-                  >
-                    Link
-                  </a>
-                ) : (
-                  <span className="text-gray-400">—</span>
-                )}
+              <td className="px-4 py-2 font-semibold text-gray-900 dark:text-white">
+                {problem.num_of_prbs || 1}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+
   );
 }
