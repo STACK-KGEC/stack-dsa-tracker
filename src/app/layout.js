@@ -4,11 +4,23 @@ import ClientLayout from '@/components/ClientLayout';
 export const metadata = {
   title: 'DSA Tracker',
   description: 'Track your DSA progress with friends!',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Favicon for SVG */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/* (Optional) Fallback for older browsers */}
+        <link rel="alternate icon" href="/favicon.ico" />
+        {/* Meta description */}
+        <meta name="description" content="Track your DSA progress with friends!" />
+        <title>DSA Tracker</title>
+      </head>
       <body>
         <ClientLayout>
           {children}
