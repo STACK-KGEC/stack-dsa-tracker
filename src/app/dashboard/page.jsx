@@ -126,7 +126,7 @@ export default function Dashboard() {
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-4 text-primary dark:text-primary-dark flex items-center gap-2">
-            <FaCalendarAlt /> Recent Problems
+            <FaCalendarAlt /> Recently Solved
           </h2>
           <ProblemList />
         </div>

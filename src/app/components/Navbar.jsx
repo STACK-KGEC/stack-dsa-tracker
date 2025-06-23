@@ -25,7 +25,7 @@ export default function Navbar({ user, darkMode, toggleDarkMode }) {
           <>
             <CustomNavLink href="/dashboard" pathname={pathname}>Dashboard</CustomNavLink>
             <CustomNavLink href="/leaderboard" pathname={pathname}>Leaderboard</CustomNavLink>
-            <CustomNavLink href="/problems" pathname={pathname}>Problems</CustomNavLink>
+            <CustomNavLink href="/solved" pathname={pathname}>Solved</CustomNavLink>
             <CustomNavLink href="/profile" pathname={pathname}>Profile</CustomNavLink>
             <button
               onClick={toggleDarkMode}
