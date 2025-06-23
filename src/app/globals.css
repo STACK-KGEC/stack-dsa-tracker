@@ -1,26 +1,39 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Courier Prime', monospace;
+  background: #f1f5f9;
+  color: #2563eb;
 }
+
+html.dark body {
+  background: #1e293b;
+  color: #60a5fa;
+}
+
+/* Selection styling for both modes */
+::selection {
+  background: #2563eb; /* primary */
+  color: #fff;
+}
+html.dark ::selection {
+  background: #60a5fa; /* primary.dark */
+  color: #1e293b;      /* background.dark */
+}
+
+/* Use your preferred blue for the calendar icon in dark mode */
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  color: #60a5fa; /* blue-400 */
+  opacity: 1;
+}
+
+/* For WebKit browsers: force the icon to your blue using filter */
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) saturate(100%) invert(67%) sepia(55%) saturate(747%) hue-rotate(176deg) brightness(97%) contrast(91%);
+}
+
