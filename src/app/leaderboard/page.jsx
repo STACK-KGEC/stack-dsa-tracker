@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 import {
   FaTrophy,
-  FaUser,
   FaStar,
   FaTasks,
   FaHistory,
   FaMedal,
+  FaUserFriends,
 } from 'react-icons/fa';
+import UserProfilePopup from '@/components/UserProfilePopup';
 
 const leaderboardViews = {
   alltime: { label: 'All Time', current: 'leaderboard_alltime_with_names' },
@@ -41,6 +42,7 @@ export default function LeaderboardPage() {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userRank, setUserRank] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     async function fetchLeaders() {
@@ -87,6 +89,24 @@ export default function LeaderboardPage() {
     }
     fetchLeaders();
   }, [period, showPrevious]);
+
+  // Fetch profile for popup
+  async function fetchUserProfile(user_id) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user_id)
+      .single();
+    if (error || !data) {
+      setSelectedUser({});
+      return;
+    }
+    setSelectedUser(data);
+  }
+
+  async function handleUserClick(user_id) {
+    await fetchUserProfile(user_id);
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
@@ -176,7 +196,11 @@ export default function LeaderboardPage() {
             <thead>
               <tr>
                 <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">Rank</th>
-                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">Name</th>
+                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                  <span className="flex items-center gap-2">
+                    <FaUserFriends className="text-indigo-500" /> Name
+                  </span>
+                </th>
                 <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">
                   <span className="flex items-center gap-2">
                     <FaStar className="text-yellow-500" /> Coins
@@ -202,9 +226,23 @@ export default function LeaderboardPage() {
                 return (
                   <tr key={row.user_id || row.id} className="border-t border-gray-200 dark:border-gray-700">
                     <td className="py-2 px-4 font-bold">{row.rank}</td>
-                    <td className="py-2 px-4">{row.display_name || 'Anonymous'}</td>
-                    <td className="py-2 px-4">{row.coins}</td>
-                    <td className="py-2 px-4">{row.problems_solved}</td>
+                    <td
+                      className="py-2 px-4 cursor-pointer text-blue-600 dark:text-blue-300 hover:underline"
+                      onClick={() => handleUserClick(row.user_id)}
+                      title="View Profile"
+                    >
+                      {row.display_name || 'Anonymous'}
+                    </td>
+                    <td className="py-2 px-4">
+                      <span className="flex items-center gap-2">
+                        <FaStar className="text-yellow-500" /> {row.coins}
+                      </span>
+                    </td>
+                    <td className="py-2 px-4">
+                      <span className="flex items-center gap-2">
+                        <FaTasks className="text-green-600" /> {row.problems_solved}
+                      </span>
+                    </td>
                   </tr>
                 );
               })}
@@ -212,6 +250,10 @@ export default function LeaderboardPage() {
           </table>
         )}
       </div>
+      {/* User Profile Popup */}
+      {selectedUser !== null && (
+        <UserProfilePopup user={selectedUser} onClose={() => setSelectedUser(null)} />
+      )}
     </div>
   );
 }

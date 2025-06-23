@@ -55,16 +55,6 @@ export default function Home() {
         </Link>
       </div>
 
-
-
-
-
-    
-
-
-
-
-
     <section className="max-w-5xl mb-16 px-4">
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 justify-center">
         {/* Credits Block */}
@@ -108,7 +98,7 @@ export default function Home() {
             href="https://github.com/STACK-KGEC/stack-dsa-tracker"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-700 dark:text-indigo-300 font-bold text-lg transition m-auto"
+            className="inline-flex items-center gap-3 bg-indigo-100 dark:bg-gray-800 px-6 py-3 rounded-xl shadow hover:bg-indigo-100 dark:hover:bg-gray-700 text-indigo-700 dark:text-indigo-300 font-bold text-lg transition m-auto"
           >
             <FaGithub className="text-2xl" />
             Open Source on GitHub
@@ -119,25 +109,6 @@ export default function Home() {
         </div>
       </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* Features Section */}
       <h2 className="text-4xl font-extrabold text-indigo-700 dark:text-indigo-200 text-center mb-16 mt-16">Features</h2>

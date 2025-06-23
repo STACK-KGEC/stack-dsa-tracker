@@ -206,7 +206,7 @@ export default function Profile() {
               value={form.bio}
               onChange={handleChange}
               placeholder="Tell us about yourself"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-lg"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-lg min-h-[120px]"
               rows={3}
             />
           </div>
@@ -217,7 +217,7 @@ export default function Profile() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <SocialInput label="Codechef" name="codechef_url" value={form.codechef_url} onChange={handleChange} placeholder="https://www.codechef.com/users/yourid" />
             <SocialInput label="Codeforces" name="codeforces_url" value={form.codeforces_url} onChange={handleChange} placeholder="https://codeforces.com/profile/yourid" />
-            <SocialInput label="GeeksforGeeks" name="geekforgeeks_url" value={form.geekforgeeks_url} onChange={handleChange} placeholder="https://auth.geeksforgeeks.org/user/yourid" />
+            <SocialInput label="GeeksforGeeks" name="geekforgeeks_url" value={form.geekforgeeks_url} onChange={handleChange} placeholder="https://www.geeksforgeeks.org/user/yourid" />
             <SocialInput label="GitHub" name="github_url" value={form.github_url} onChange={handleChange} placeholder="https://github.com/yourid" />
             <SocialInput label="LeetCode" name="leetcode_url" value={form.leetcode_url} onChange={handleChange} placeholder="https://leetcode.com/yourid" />
             <SocialInput label="LinkedIn" name="linkedin_url" value={form.linkedin_url} onChange={handleChange} placeholder="https://linkedin.com/in/yourid" />
