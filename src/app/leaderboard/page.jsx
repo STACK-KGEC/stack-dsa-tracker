@@ -123,7 +123,7 @@ export default function LeaderboardPage() {
             className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2
               ${!showPrevious
                 ? 'bg-indigo-600 text-white'
-                : 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
+                : 'bg-indigo-200 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
               }`
             }
           >
@@ -134,7 +134,7 @@ export default function LeaderboardPage() {
             className={`px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2
               ${showPrevious
                 ? 'bg-indigo-600 text-white'
-                : 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
+                : 'bg-indigo-200 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300'
               }`
             }
           >
