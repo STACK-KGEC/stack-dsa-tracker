@@ -233,16 +233,8 @@ export default function LeaderboardPage() {
                     >
                       {row.display_name || 'Anonymous'}
                     </td>
-                    <td className="py-2 px-4">
-                      <span className="flex items-center gap-2">
-                        <FaStar className="text-yellow-500" /> {row.coins}
-                      </span>
-                    </td>
-                    <td className="py-2 px-4">
-                      <span className="flex items-center gap-2">
-                        <FaTasks className="text-green-600" /> {row.problems_solved}
-                      </span>
-                    </td>
+                    <td className="py-2 px-4">{row.coins}</td>
+                    <td className="py-2 px-4">{row.problems_solved}</td>
                   </tr>
                 );
               })}
