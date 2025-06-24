@@ -12,7 +12,7 @@ Please take a moment to review these guidelines before making a contribution.
 - Click the **Fork** button on the top right of the [repository page](https://github.com/STACK-KGEC/stack-dsa-tracker).  
 - Clone your forked repository locally:  
   ```sh
-  git clone https://github.com/<STACK-KGEC>/stack-dsa-tracker.git
+  git clone https://github.com/STACK-KGEC/stack-dsa-tracker.git
   ```
 
 ### **2. Create a New Branch**  
@@ -20,7 +20,7 @@ Please take a moment to review these guidelines before making a contribution.
   ```sh
   git checkout -b your-branch-name
   ```
-- Use a descriptive branch name (e.g., `fix/issue-123`, `feat/add-sorting-algo`).  
+- Use a descriptive branch name (e.g., `fix/issue-123`, `feat/add-caching`).  
 
 ### **3. Make Your Changes**  
 - Follow the existing code style and structure.  
@@ -30,7 +30,7 @@ Please take a moment to review these guidelines before making a contribution.
 ### **4. Commit Your Changes**  
 - Write clear and concise commit messages:  
   ```sh
-  git commit -m "feat: add binary search implementation"
+  git commit -m "feat: add profile search implementation"
   ```
 - Use **conventional commit** prefixes like:  
   - `feat:` for new features  
@@ -49,22 +49,18 @@ Please take a moment to review these guidelines before making a contribution.
 
 ---
 
-## **✅ Contribution Rules**  
-✔ **DSA Solutions:**  
-   - Follow consistent naming (e.g., `binary_search.py`, `linked_list.cpp`).  
-   - Add comments explaining the approach.  
-   - Ensure optimal time & space complexity.  
+## **✅ Contribution Rules**   
 
-✔ **Documentation:**  
-   - Update `README.md` if you add new features.  
-   - Keep code examples clear and well-formatted.  
+✔ **Documentation:**    
+   - Keep code examples clear and well-formatted.
+   - Add proper documentation of what you are doing in your PR. 
 
 ✔ **Tests:**  
-   - Add test cases for new algorithms (if applicable).  
+   - Run tests to ensure proper working of the feature or check if the issue is fixed.  
 
 ❌ **Avoid:**  
-   - Duplicate solutions (check existing files first).  
-   - Unnecessary large file changes.  
+   - Duplicates (check existing files first).  
+   - Unnecessary large file changes. 
 
 ---
 
@@ -75,7 +71,7 @@ Please take a moment to review these guidelines before making a contribution.
 ---
 
 ## **📜 Code of Conduct**  
-Be respectful and inclusive. Follow [STACK KGEC's Code of Conduct](https://github.com/STACK-KGEC/.github/blob/main/CODE_OF_CONDUCT.md).  
+Be respectful and inclusive. Follow [Code of Conduct](https://github.com/STACK-KGEC/stack-dsa-tracker/blob/main/CODE_OF_CONDUCT.md).  
 
 ---
 
@@ -84,4 +80,4 @@ Your efforts help the community grow. Happy coding! 🚀
 
 For any questions, open an **issue** or reach out to maintainers.  
 
-**STACK KGEC** © 2024
+**STACK KGEC** © 2025
