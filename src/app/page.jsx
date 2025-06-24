@@ -59,10 +59,10 @@ export default function Home() {
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 justify-center">
         {/* Credits Block */}
         <div className="flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center">
-          <span className="text-2xl text-indigo-700 dark:text-indigo-300 font-extrabold mb-4 tracking-wide flex items-center gap-2">
+          <span className="text-2xl text-indigo-700 dark:text-indigo-300 font-extrabold mb-6 tracking-wide flex items-center gap-2">
             <FaUserFriends className="text-indigo-400" /> Credits
           </span>
-          <div className="flex flex-col gap-3 items-center text-indigo-700 dark:text-indigo-300 font-bold text-lg">
+          <div className="flex flex-col gap-2 items-center text-indigo-700 dark:text-indigo-300 font-bold text-lg">
             <a
               href="https://stack-kgec.pages.dev"
               target="_blank"
@@ -86,6 +86,14 @@ export default function Home() {
               className="hover:underline flex items-center gap-2"
             >
               Dwaipayan Datta
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nirjhar-debnath-515918331/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline flex items-center gap-2"
+            >
+              Nirjhar Debnath
             </a>
           </div>
         </div>
@@ -114,22 +122,22 @@ export default function Home() {
       <h2 className="text-4xl font-extrabold text-indigo-700 dark:text-indigo-200 text-center mb-16 mt-16">Features</h2>
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 px-4">
         <FeatureCard
-          icon={<FaTrophy className="text-4xl text-yellow-400 mb-3" />}
+          icon={<FaTrophy className="text-4xl text-yellow-400 mb-8" />}
           title="Compete on the Leaderboard"
           description="Climb daily, weekly, monthly, and all-time leaderboards. Earn coins for every problem solved and see your progress live."
         />
         <FeatureCard
-          icon={<FaUserFriends className="text-4xl text-green-400 mb-3" />}
+          icon={<FaUserFriends className="text-4xl text-green-400 mb-8" />}
           title="Track With Friends"
           description="See your friends' progress, compare stats, and motivate each other to stay consistent in your DSA journey."
         />
         <FeatureCard
-          icon={<FaChartLine className="text-4xl text-blue-400 mb-3" />}
+          icon={<FaChartLine className="text-4xl text-blue-400 mb-8" />}
           title="Visualize Your Growth"
           description="Get beautiful charts and insights into your problem-solving habits, strengths, and improvement areas."
         />
         <FeatureCard
-          icon={<FaLock className="text-4xl text-indigo-400 mb-3" />}
+          icon={<FaLock className="text-4xl text-indigo-400 mb-8" />}
           title="Private & Secure"
           description="Your data is protected. Only you and your friends can see your progress. No spam, no distractions."
         />
@@ -144,8 +152,8 @@ function FeatureCard({ icon, title, description }) {
   return (
     <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl px-8 py-10 flex flex-col items-center hover:scale-105 transition-transform duration-300">
       {icon}
-      <div className="text-2xl font-bold text-indigo-700 dark:text-indigo-300 mb-2 text-center">{title}</div>
-      <div className="text-gray-700 dark:text-gray-300 text-lg text-center">{description}</div>
+      <div className="text-xl font-bold text-indigo-700 dark:text-indigo-300 mb-3 text-center">{title}</div>
+      <div className="text-gray-700 dark:text-gray-300 text-lg text-justify">{description}</div>
     </div>
   );
 }

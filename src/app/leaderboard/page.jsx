@@ -201,14 +201,14 @@ export default function LeaderboardPage() {
                     <FaUserFriends className="text-indigo-500" /> Name
                   </span>
                 </th>
-                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">
-                  <span className="flex items-center gap-2">
+                <th className="text-right py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                  <span className="flex items-center gap-2 justify-end">
                     <FaStar className="text-yellow-500" /> Coins
                   </span>
                 </th>
-                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">
-                  <span className="flex items-center gap-2">
-                    <FaTasks className="text-green-600" /> Problems
+                <th className="text-right py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                  <span className="flex items-center gap-2 justify-end">
+                    <FaTasks className="text-green-600" /> Solved
                   </span>
                 </th>
               </tr>
@@ -233,8 +233,8 @@ export default function LeaderboardPage() {
                     >
                       {row.display_name || 'Anonymous'}
                     </td>
-                    <td className="py-2 px-4">{row.coins}</td>
-                    <td className="py-2 px-4">{row.problems_solved}</td>
+                    <td className="py-2 px-4 text-right">{row.coins}</td>
+                    <td className="py-2 px-4 text-right">{row.problems_solved}</td>
                   </tr>
                 );
               })}
