@@ -6,46 +6,93 @@ import ProblemList from '@/components/ProblemList';
 import StatsCard from '@/components/StatsCard';
 import { FaCheckCircle, FaStar, FaBolt, FaFire, FaLeaf, FaCalendarAlt } from 'react-icons/fa';
 
+const PERIODS = [
+  { key: 'alltime', label: 'All Time', view: 'leaderboard_alltime_with_names' },
+  { key: 'monthly', label: 'This Month', view: 'leaderboard_monthly_with_names' },
+  { key: 'weekly', label: 'This Week', view: 'leaderboard_weekly_with_names' },
+  { key: 'daily', label: 'Today', view: 'leaderboard_daily_with_names' },
+];
+
 export default function Dashboard() {
   const [stats, setStats] = useState({ solved: 0, rank: '-', coins: 0, easy: 0, medium: 0, hard: 0 });
-  const [allRanks, setAllRanks] = useState([]);
+  const [selectedPeriod, setSelectedPeriod] = useState('alltime');
+  const [loading, setLoading] = useState(true);
+
+  // On mount, check localStorage for saved period
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('dashboardPeriod');
+      if (stored && stored !== selectedPeriod) {
+        setSelectedPeriod(stored);
+      }
+    }
+  }, []);
+
+  // Fetch stats whenever selectedPeriod changes
+  useEffect(() => {
+    fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPeriod]);
 
   async function fetchStats() {
+    setLoading(true);
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
-    // Fetch all problems for the user, including num_of_prbs
-    const { data: problems } = await supabase
-      .from('problems')
-      .select('difficulty, num_of_prbs')
+    const periodObj = PERIODS.find(p => p.key === selectedPeriod) || PERIODS[0];
+
+    // Fetch user stats from the selected leaderboard view
+    const { data: [userStats] } = await supabase
+      .from(periodObj.view)
+      .select('problems_solved, coins, user_id')
       .eq('user_id', user.id);
 
-    let easy = 0, medium = 0, hard = 0, solved = 0, coins = 0;
-    if (problems) {
-      problems.forEach(p => {
-        const n = p.num_of_prbs || 1;
-        solved += n;
-        if (p.difficulty === 'Easy') {
-          easy += n;
-          coins += 10 * n;
-        } else if (p.difficulty === 'Medium') {
-          medium += n;
-          coins += 20 * n;
-        } else if (p.difficulty === 'Hard') {
-          hard += n;
-          coins += 30 * n;
-        }
+    // Fetch per-difficulty stats using RPC
+    let easy = 0, medium = 0, hard = 0;
+    let startDate, endDate;
+    const today = new Date();
+
+    if (selectedPeriod === 'daily') {
+      startDate = endDate = today.toISOString().slice(0, 10);
+    } else if (selectedPeriod === 'weekly') {
+      const dayOfWeek = today.getDay() === 0 ? 6 : today.getDay() - 1;
+      const weekStart = new Date(today);
+      weekStart.setDate(today.getDate() - dayOfWeek);
+      startDate = weekStart.toISOString().slice(0, 10);
+      endDate = today.toISOString().slice(0, 10);
+    } else if (selectedPeriod === 'monthly') {
+      startDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
+      endDate = today.toISOString().slice(0, 10);
+    } else {
+      startDate = '2025-01-01';
+      endDate = today.toISOString().slice(0, 10);
+    }
+
+    const { data: difficultyStats } = await supabase
+      .rpc('user_difficulty_stats', {
+        uid: user.id,
+        start_date: startDate,
+        end_date: endDate
+      });
+
+    if (difficultyStats) {
+      difficultyStats.forEach(d => {
+        if (d.difficulty === 'Easy') easy = Number(d.count);
+        if (d.difficulty === 'Medium') medium = Number(d.count);
+        if (d.difficulty === 'Hard') hard = Number(d.count);
       });
     }
 
-    // Fetch leaderboard alltime to calculate rank and all ranks
+    // Fetch leaderboard for the selected period to calculate rank
     const { data: leaderboard } = await supabase
-      .from('leaderboard_alltime_with_names')
-      .select('*')
+      .from(periodObj.view)
+      .select('user_id, coins')
       .order('coins', { ascending: false });
 
     let rank = '-';
-    let ranks = [];
     if (leaderboard && Array.isArray(leaderboard)) {
       let currentRank = 1;
       let lastCoins = null;
@@ -55,7 +102,6 @@ export default function Dashboard() {
           currentRank = index + 1;
           lastCoins = entry.coins;
         }
-        ranks.push({ ...entry, rank: currentRank });
         if (entry.user_id === user.id) {
           userRank = currentRank;
         }
@@ -63,13 +109,24 @@ export default function Dashboard() {
       rank = userRank ? `#${userRank}` : '-';
     }
 
-    setStats({ solved, rank, coins, easy, medium, hard });
-    setAllRanks(ranks);
+    setStats({
+      solved: userStats?.problems_solved ?? 0,
+      rank,
+      coins: userStats?.coins ?? 0,
+      easy,
+      medium,
+      hard
+    });
+    setLoading(false);
   }
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
+  // Save selected period to localStorage
+  function handlePeriodChange(key) {
+    setSelectedPeriod(key);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dashboardPeriod', key);
+    }
+  }
 
   // To refresh stats after adding a problem
   const handleProblemAdded = () => fetchStats();
@@ -79,38 +136,56 @@ export default function Dashboard() {
       <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center gap-3">
         <FaStar /> Dashboard
       </h1>
+
+      {/* Period selection row */}
+      <div className="flex items-center justify-center gap-4 mb-6">
+        <span className="font-semibold text-lg text-gray-700 dark:text-gray-200">Showing for:</span>
+        {PERIODS.map(period => (
+          <button
+            key={period.key}
+            onClick={() => handlePeriodChange(period.key)}
+            className={`px-4 py-2 rounded-full font-semibold transition 
+              ${selectedPeriod === period.key
+                ? 'bg-blue-500 text-white shadow'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
+          >
+            {period.label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-10">
         <StatsCard
           title="Solved"
-          value={stats.solved}
+          value={loading ? '-' : stats.solved}
           icon={<FaCheckCircle className="text-blue-500" />}
           color="bg-white dark:bg-gray-700"
           textColor="text-blue-900 dark:text-blue-200"
         />
         <StatsCard
           title="Coins"
-          value={stats.coins}
+          value={loading ? '-' : stats.coins}
           icon={<FaStar className="text-yellow-400" />}
           color="bg-yellow-100 dark:bg-yellow-900"
           textColor="text-yellow-800 dark:text-yellow-200"
         />
         <StatsCard
           title="Easy"
-          value={stats.easy}
+          value={loading ? '-' : stats.easy}
           icon={<FaLeaf className="text-green-500" />}
           color="bg-green-100 dark:bg-green-900"
           textColor="text-green-800 dark:text-green-200"
         />
         <StatsCard
           title="Medium"
-          value={stats.medium}
+          value={loading ? '-' : stats.medium}
           icon={<FaBolt className="text-yellow-500" />}
           color="bg-yellow-100 dark:bg-yellow-900"
           textColor="text-yellow-800 dark:text-yellow-200"
         />
         <StatsCard
           title="Hard"
-          value={stats.hard}
+          value={loading ? '-' : stats.hard}
           icon={<FaFire className="text-red-500" />}
           color="bg-red-100 dark:bg-red-900"
           textColor="text-red-800 dark:text-red-200"
