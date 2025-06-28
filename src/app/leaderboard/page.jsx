@@ -113,8 +113,10 @@ export default function LeaderboardPage() {
       <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-2 text-center flex items-center justify-center gap-3">
         <FaTrophy /> Leaderboard
       </h1>
-      <p className="text-xs text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center">Leaderboard updates according to UTC time.</p>
-
+      <p className="text-xs text-primary dark:text-primary-dark text-center flex items-center justify-center">Check where you & your friends stand.</p>
+      <p className="text-sm text-red-600 mb-10 mt-8 text-center flex items-center justify-center">
+        <span className='underline'>Leaderboard updates according to UTC time</span>
+      </p>
 
       {/* Period Tabs */}
       <div className="flex justify-center mb-6 gap-4 flex-wrap">
