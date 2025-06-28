@@ -4,6 +4,7 @@ import { supabase } from '@/utils/supabaseClient';
 import ProblemForm from '@/components/ProblemForm';
 import ProblemList from '@/components/ProblemList';
 import StatsCard from '@/components/StatsCard';
+import MonthlyLineChart from "@/components/MonthlyLineChart";
 import { FaCheckCircle, FaStar, FaBolt, FaFire, FaLeaf, FaCalendarAlt } from 'react-icons/fa';
 
 const PERIODS = [
@@ -207,6 +208,12 @@ export default function Dashboard() {
           <ProblemList />
         </div>
       </div>
+
+      <div className="w-full mx-auto my-8">
+        <MonthlyLineChart />
+      </div>
+
+
     </div>
   );
 }

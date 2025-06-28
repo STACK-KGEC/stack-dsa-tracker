@@ -20,7 +20,7 @@ export default function ProblemList() {
         .select('*')
         .eq('user_id', user.id)
         .order('solved_date', { ascending: false })
-        .limit(10);
+        .limit(5);
 
       setProblems(data || []);
       setLoading(false);
