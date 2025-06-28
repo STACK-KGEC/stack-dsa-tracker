@@ -109,10 +109,12 @@ export default function LeaderboardPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center gap-3">
+    <div className="w-full mx-auto px-4">
+      <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-2 text-center flex items-center justify-center gap-3">
         <FaTrophy /> Leaderboard
       </h1>
+      <p className="text-xs text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center">Leaderboard updates according to UTC time.</p>
+
 
       {/* Period Tabs */}
       <div className="flex justify-center mb-6 gap-4 flex-wrap">

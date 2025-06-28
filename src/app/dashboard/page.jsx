@@ -133,9 +133,10 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center gap-3">
+      <h1 className="text-4xl font-extrabold text-primary dark:text-primary-dark mb-2 text-center flex items-center justify-center gap-3">
         <FaStar /> Dashboard
       </h1>
+      <p className="text-xs text-primary dark:text-primary-dark mb-8 text-center flex items-center justify-center">View your stats & add solved problems.</p>
 
       {/* Period selection row */}
       <div className="flex items-center justify-center gap-4 mb-6">
