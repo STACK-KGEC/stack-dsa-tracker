@@ -3,12 +3,19 @@ import { useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 
 function getLast7Days() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  // Get current UTC time, then add 5 hours 30 minutes for IST
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const istOffset = 5.5 * 60 * 60000; // 5 hours 30 mins in ms
+  const todayIST = new Date(utc + istOffset);
+
+  // Set time to 00:00:00 in IST
+  todayIST.setHours(0, 0, 0, 0);
+
   const days = [];
   for (let i = 0; i < 7; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
+    const d = new Date(todayIST);
+    d.setDate(todayIST.getDate() - i);
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
@@ -16,6 +23,7 @@ function getLast7Days() {
   }
   return days;
 }
+
 
 export default function ProblemForm({ onAdded }) {
   const [bulk, setBulk] = useState(false);
@@ -58,6 +66,7 @@ export default function ProblemForm({ onAdded }) {
     }
     setIsSubmitting(false);
   };
+  console.log('minDate:', minDate, 'maxDate:', maxDate, 'solvedDate:', solvedDate);
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 flex flex-col gap-4">

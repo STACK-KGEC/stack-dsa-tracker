@@ -167,48 +167,49 @@ export default function LeaderboardPage() {
 
       {/* Self Rank Card */}
       {userRank && (
-        <div className="max-w-2xl mx-auto bg-yellow-100 dark:bg-yellow-900 rounded-2xl shadow p-6 mb-8 flex items-center justify-center gap-8">
+        <div className="w-full mx-auto bg-yellow-100 dark:bg-indigo-900 rounded-2xl p-6 mb-8 flex items-center justify-center gap-8 border-2 border-yellow-400 dark:border-indigo-400">
           <div className="flex items-center gap-2">
-            <FaMedal className="text-yellow-600 dark:text-yellow-400 text-2xl" />
+            <FaMedal className="text-yellow-600 dark:text-yellow-300 text-2xl" />
             <span className="font-bold text-yellow-700 dark:text-yellow-300 text-xl">
               #{userRank.rank}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <FaStar className="text-yellow-500 dark:text-yellow-200 text-2xl" />
+            <FaStar className="text-yellow-500 dark:text-yellow-300 text-2xl" />
             <span className="font-bold text-yellow-700 dark:text-yellow-300 text-xl">
               {userRank.coins} Coins
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <FaTasks className="text-green-600 dark:text-green-200 text-2xl" />
-            <span className="font-bold text-green-700 dark:text-green-200 text-xl">
-              {userRank.problems_solved} Problems
-            </span>
+            <FaTasks className="text-green-600 dark:text-green-300 text-2xl" />
+            <span className="font-bold text-green-600 dark:text-green-300 text-xl">
+              {userRank.problems_solved} Solved
+            </span> 
           </div>
         </div>
-      )}
-
-      {/* Leaderboard Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-8">
+      )
+      }
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-0">
         {loading ? (
           <div className="text-center text-gray-500 dark:text-gray-400">Loading...</div>
         ) : (
           <table className="w-full">
             <thead>
               <tr>
-                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">Rank</th>
-                <th className="text-left py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                <th className="text-left py-4 px-6 text-primary dark:text-primary-dark text-lg">
+                  Rank
+                </th>
+                <th className="text-left py-4 px-6 text-primary dark:text-primary-dark text-lg">
                   <span className="flex items-center gap-2">
                     <FaUserFriends className="text-indigo-500" /> Name
                   </span>
                 </th>
-                <th className="text-right py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                <th className="text-right py-4 px-6 text-primary dark:text-primary-dark text-lg">
                   <span className="flex items-center gap-2 justify-end">
                     <FaStar className="text-yellow-500" /> Coins
                   </span>
                 </th>
-                <th className="text-right py-2 px-4 text-primary dark:text-primary-dark text-lg">
+                <th className="text-right py-4 px-6 text-primary dark:text-primary-dark text-lg">
                   <span className="flex items-center gap-2 justify-end">
                     <FaTasks className="text-green-600" /> Solved
                   </span>
@@ -227,16 +228,16 @@ export default function LeaderboardPage() {
                 row.rank = lastRank;
                 return (
                   <tr key={row.user_id || row.id} className="border-t border-gray-200 dark:border-gray-700">
-                    <td className="py-2 px-4 font-bold">{row.rank}</td>
+                    <td className="py-2 px-6 font-bold">{row.rank}</td>
                     <td
-                      className="py-2 px-4 cursor-pointer text-blue-600 dark:text-blue-300 hover:underline"
+                      className="py-2 px-6 cursor-pointer text-blue-600 dark:text-blue-300 hover:underline"
                       onClick={() => handleUserClick(row.user_id)}
                       title="View Profile"
                     >
                       {row.display_name || 'Anonymous'}
                     </td>
-                    <td className="py-2 px-4 text-right">{row.coins}</td>
-                    <td className="py-2 px-4 text-right">{row.problems_solved}</td>
+                    <td className="py-2 px-6 text-right">{row.coins}</td>
+                    <td className="py-2 px-6 text-right">{row.problems_solved}</td>
                   </tr>
                 );
               })}
