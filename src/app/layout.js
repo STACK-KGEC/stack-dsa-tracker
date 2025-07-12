@@ -2,7 +2,7 @@ import './globals.css';
 import ClientLayout from '@/components/ClientLayout';
 
 export const metadata = {
-  title: 'DSA Tracker | STACK | KGEC',
+  title: 'DSA Tracker | STACK KGEC',
   description: 'Track your DSA progress with your community! Developed by STACK, KGEC.',
   icons: {
     icon: '/favicon.svg',
@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <link rel="alternate icon" href="/favicon.ico" />
         {/* Meta description */}
         <meta name="description" content="Track your DSA progress with your community! Developed by STACK, KGEC." />
-        <title>DSA Tracker | STACK | KGEC</title>
+        <title>DSA Tracker | STACK KGEC</title>
       </head>
       <body>
         <ClientLayout>
