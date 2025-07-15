@@ -1,15 +1,13 @@
 'use client';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { supabase } from '@/utils/supabaseClient';
 
 function getLast7Days() {
-  // Get current UTC time, then add 5 hours 30 minutes for IST
   const now = new Date();
   const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const istOffset = 5.5 * 60 * 60000; // 5 hours 30 mins in ms
+  const istOffset = 5.5 * 60 * 60000;
   const todayIST = new Date(utc + istOffset);
 
-  // Set time to 00:00:00 in IST
   todayIST.setHours(0, 0, 0, 0);
 
   const days = [];
@@ -24,18 +22,18 @@ function getLast7Days() {
   return days;
 }
 
-
 export default function ProblemForm({ onAdded }) {
+  const last7Days = useMemo(() => getLast7Days(), []);
+  const minDate = last7Days[6];
+  const maxDate = last7Days[0];
+
   const [bulk, setBulk] = useState(false);
   const [title, setTitle] = useState('');
   const [difficulty, setDifficulty] = useState('Easy');
   const [link, setLink] = useState('');
   const [numOfPrbs, setNumOfPrbs] = useState(1);
-  const [solvedDate, setSolvedDate] = useState(getLast7Days()[0]);
+  const [solvedDate, setSolvedDate] = useState(maxDate);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const minDate = getLast7Days()[6];
-  const maxDate = getLast7Days()[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,14 +57,13 @@ export default function ProblemForm({ onAdded }) {
       setTitle('');
       setLink('');
       setDifficulty('Easy');
-      setSolvedDate(getLast7Days()[0]);
       setNumOfPrbs(1);
+      setSolvedDate(maxDate);
       alert('Problem added successfully!');
       if (onAdded) onAdded();
     }
     setIsSubmitting(false);
   };
-  console.log('minDate:', minDate, 'maxDate:', maxDate, 'solvedDate:', solvedDate);
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 flex flex-col gap-4">
@@ -103,15 +100,19 @@ export default function ProblemForm({ onAdded }) {
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
         </select>
-        <input
-          id="solvedDate"
-          type="date"
-          value={solvedDate}
-          min={minDate}
-          max={maxDate}
-          onChange={e => setSolvedDate(e.target.value)}
-          className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
-        />
+        {/* Force remount with key={solvedDate} */}
+        <>
+          <input
+            key={solvedDate}
+            id="solvedDate"
+            type="date"
+            value={solvedDate}
+            min={minDate}
+            max={maxDate}
+            onChange={e => setSolvedDate(e.target.value)}
+            className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-lg"
+          />
+        </>
       </div>
       {bulk && (
         <input
